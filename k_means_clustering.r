@@ -1,7 +1,6 @@
 dataset <- read.csv("diabetes_prediction_dataset.csv")
 summary(dataset)
 
-
 #Data Cleaning
 #Rounding the 'age' variable to integer
 dataset$age <- round(dataset$age)
@@ -49,7 +48,6 @@ diabetes_1_samples <- dataset %>%
 diabetes_data <- bind_rows(diabetes_0_samples, diabetes_1_samples)
 head(diabetes_data)
 
-
 #Based on the correlation coefficients, we drop the less relevant column:gender and smoking history
 #We also exclude the "diabetes" column as it does not contribute to the unsupervised k-means clustering process.
 sample_data <- diabetes_data[, c("age", "hypertension", "heart_disease","bmi", "HbA1c_level", "blood_glucose_level")]
@@ -61,7 +59,6 @@ fviz_nbclust(sample_data, kmeans, method='wss')+ labs(subtitle= 'Elbow method')
 # Silhouette method
 fviz_nbclust(sample_data, kmeans, method = "silhouette") +
   labs(subtitle = "Silhouette method")
-
 
 # Scale the sample_data to standardize the variables.
 sample_data_scale <- scale(sample_data)
@@ -91,7 +88,6 @@ BSS / TSS * 100
 (BSS <- model2$betweenss)
 (TSS <- model2$totss)
 BSS / TSS * 100
-
 
 # Replace Cluster 1 (non-diabetes group) with '0' and Cluster 2 (diabetes) with '1' in km.cluster
 km.cluster <- ifelse(km.cluster == 1, '0', '1')
